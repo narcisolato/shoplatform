@@ -1,4 +1,4 @@
-package chanuk.shoplatform
+package com.shoplatform
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
