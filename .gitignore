@@ -41,3 +41,6 @@ out/
 
 ### Settings ###
 src/main/resources/application-local.yml
+
+### Log File ###
+logs
