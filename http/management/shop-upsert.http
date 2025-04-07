@@ -1,0 +1,117 @@
+### 매장 전체 정보 조회
+GET http://localhost:8080/management/shop/shop/all
+
+### 매장 등록
+POST http://localhost:8080/management/shop
+Content-Type: application/json
+
+{
+    "shop": {
+        "code": "shop",
+        "name": "매장 이름"
+    }
+}
+
+### 카테고리 등록
+POST http://localhost:8080/management/category
+Content-Type: application/json
+
+{
+    "shopCode": "shop",
+    "categoryList": [
+        {
+            "code": "category-1",
+            "name": "카테고리1"
+        },
+        {
+            "code": "category-2",
+            "parentCategoryCode": "category-1",
+            "name": "카테고리2"
+        },
+      {
+        "code": "category-3",
+        "parentCategoryCode": "category-2",
+        "name": "카테고리2"
+      }
+    ]
+}
+
+### 상품 등록
+POST http://localhost:8080/management/item
+Content-Type: application/json
+
+{
+    "shopCode": "shop",
+    "itemList": [
+        {
+            "categoryCode": "category-1",
+            "code": "item-1",
+            "name": "아이템-1",
+            "price": 3.14
+        },
+        {
+            "categoryCode": "category-2",
+            "code": "item-2",
+            "name": "아이템-2",
+            "price": 1.59
+        },
+        {
+            "categoryCode": "category-3",
+            "code": "item-3",
+            "name": "아이템-3",
+            "price": 2.65
+        }
+    ]
+}
+
+### 옵션 등록
+POST http://localhost:8080/management/option
+Content-Type: application/json
+
+{
+    "shopCode": "shop",
+    "optionList": [
+        {
+            "itemCode": "item-1",
+            "code": "option-1",
+            "name": "옵션-1",
+            "type": "RADIO"
+        },
+        {
+            "itemCode": "item-1",
+            "code": "option-2",
+            "name": "옵션-2",
+            "type": "RADIO"
+        },
+        {
+            "itemCode": "item-1",
+            "code": "option-3",
+            "name": "옵션-3"
+        }
+    ]
+}
+
+### 옵션값 등록
+POST http://localhost:8080/management/option-value
+Content-Type: application/json
+
+{
+    "shopCode": "shop",
+    "optionValueList": [
+        {
+            "optionCode": "option-1",
+            "code": "value-1",
+            "name": "옵션값-1",
+            "price": 3.58
+        },
+        {
+            "optionCode": "option-2",
+            "code": "value-2",
+            "name": "옵션값-2"
+        },
+        {
+            "optionCode": "option-2",
+            "code": "value-3"
+        }
+    ]
+}

@@ -1,0 +1,2 @@
+# 매장 메뉴 조회
+GET http://localhost:8080/client/shop/shop

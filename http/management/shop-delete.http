@@ -1,0 +1,92 @@
+### 매장 삭제
+DELETE http://localhost:8080/management/shop
+Content-Type: application/json
+
+{
+  "shop": {
+    "code": "shop",
+    "name": "매장 이름"
+  }
+}
+
+### 카테고리 삭제
+DELETE http://localhost:8080/management/category
+Content-Type: application/json
+
+{
+    "shopCode": "shop",
+    "categoryList": [
+        {
+            "code": "category-1"
+        },
+        {
+            "code": "category-2"
+        }
+    ]
+}
+
+### 상품 삭제
+DELETE http://localhost:8080/management/item
+Content-Type: application/json
+
+{
+    "shopCode": "shop",
+    "itemList": [
+        {
+            "categoryCode": "category-a",
+            "code": "item-1"
+        },
+        {
+            "categoryCode": "category-d",
+            "code": "item-5"
+        },
+        {
+            "categoryCode": "category-c",
+            "code": "item-7"
+        }
+    ]
+}
+
+### 옵션 삭제
+DELETE http://localhost:8080/management/option
+Content-Type: application/json
+
+{
+    "shopCode": "shop",
+    "optionList": [
+        {
+            "itemCode": "item-1",
+            "code": "option-1"
+        },
+        {
+            "itemCode": "item-1",
+            "code": "option-2"
+        },
+        {
+            "itemCode": "item-1",
+            "code": "option-3"
+        }
+    ]
+}
+
+### 옵션값 삭제
+DELETE http://localhost:8080/management/option-value
+Content-Type: application/json
+
+{
+    "shopCode": "shop",
+    "optionValueList": [
+        {
+            "optionCode": "option-1",
+            "code": "value-1"
+        },
+        {
+            "optionCode": "option-2",
+            "code": "value-2"
+        },
+        {
+            "optionCode": "option-2",
+            "code": "value-3"
+        }
+    ]
+}
