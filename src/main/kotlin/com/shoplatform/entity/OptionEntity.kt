@@ -1,5 +1,6 @@
 package com.shoplatform.entity
 
+import com.shoplatform.shared.enums.OptionType
 import jakarta.persistence.*
 
 @Entity(name = "option")
@@ -25,14 +26,6 @@ class OptionEntity(
     val valueList: List<OptionValueEntity>,
 
     ) : BaseEntity() {
-
-    enum class OptionType {
-        RADIO,
-        CHECKBOX,
-        STEPPER,
-        SELECT,
-        TOGGLE
-    }
 
     companion object {
         fun of(shop: ShopEntity, code: String): OptionEntity {
