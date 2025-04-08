@@ -6,6 +6,7 @@ import com.shoplatform.entity.ShopEntity
 import com.shoplatform.repository.CategoryRepository
 import com.shoplatform.repository.ItemRepository
 import com.shoplatform.shared.converter.toDomain
+import com.shoplatform.shared.updater.update
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -31,14 +32,8 @@ class ItemService(
 
         val itemEntityList = request.itemList.map {
             val categoryEntity = categoryEntityMap[it.categoryCode]
-                ?: throw IllegalArgumentException("Category with code ${it.categoryCode} not found")
-
             val itemEntity = ItemEntity.of(shopEntity, it.code)
-
-            itemEntity.category = categoryEntity
-            itemEntity.name = it.name
-            itemEntity.price = it.price
-            itemEntity
+            itemEntity.update(it, categoryEntity)
         }
 
         itemRepository.saveAll(itemEntityList)
@@ -72,15 +67,9 @@ class ItemService(
 
         val itemEntityList = request.itemList.map {
             val categoryEntity = categoryEntityMap[it.categoryCode]
-                ?: throw IllegalArgumentException("Category with code ${it.categoryCode} not found")
-
             val itemEntity = itemEntityMap[it.code]
                 ?: throw IllegalArgumentException("The Item with code: ${it.code} not found")
-
-            itemEntity.category = categoryEntity
-            itemEntity.name = it.name
-            itemEntity.price = it.price
-            itemEntity
+            itemEntity.update(it, categoryEntity)
         }
         itemRepository.saveAll(itemEntityList)
 
@@ -104,15 +93,9 @@ class ItemService(
 
         val itemEntityList = request.itemList.map {
             val categoryEntity = categoryEntityMap[it.categoryCode]
-                ?: throw IllegalArgumentException("Category with code ${it.categoryCode} not found")
-
             val itemEntity = itemEntityMap[it.code]
                 ?: ItemEntity.of(shopEntity, it.code)
-
-            itemEntity.category = categoryEntity
-            itemEntity.name = it.name
-            itemEntity.price = it.price
-            itemEntity
+            itemEntity.update(it, categoryEntity)
         }
         itemRepository.saveAll(itemEntityList)
 
