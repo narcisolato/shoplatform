@@ -33,6 +33,7 @@ class ItemService(
         val itemEntityList = request.itemList.map {
             val categoryEntity = categoryEntityMap[it.categoryCode]
             val itemEntity = ItemEntity.of(shopEntity, it.code)
+
             itemEntity.update(it, categoryEntity)
         }
 
@@ -69,6 +70,7 @@ class ItemService(
             val categoryEntity = categoryEntityMap[it.categoryCode]
             val itemEntity = itemEntityMap[it.code]
                 ?: throw IllegalArgumentException("The Item with code: ${it.code} not found")
+
             itemEntity.update(it, categoryEntity)
         }
         itemRepository.saveAll(itemEntityList)
@@ -95,6 +97,7 @@ class ItemService(
             val categoryEntity = categoryEntityMap[it.categoryCode]
             val itemEntity = itemEntityMap[it.code]
                 ?: ItemEntity.of(shopEntity, it.code)
+
             itemEntity.update(it, categoryEntity)
         }
         itemRepository.saveAll(itemEntityList)

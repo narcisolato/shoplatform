@@ -6,6 +6,7 @@ import com.shoplatform.entity.ShopEntity
 import com.shoplatform.repository.ItemRepository
 import com.shoplatform.repository.OptionRepository
 import com.shoplatform.shared.converter.toDomain
+import com.shoplatform.shared.updater.update
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -31,14 +32,9 @@ class OptionService(
 
         val optionEntityList = request.optionList.map {
             val itemEntity = itemEntityMap[it.itemCode]
-                ?: throw IllegalArgumentException("The item with code ${it.itemCode} not found")
-
             val optionEntity = OptionEntity.of(shopEntity, it.code)
 
-            optionEntity.item = itemEntity
-            optionEntity.name = it.name
-            optionEntity.type = it.type
-            optionEntity
+            optionEntity.update(it, itemEntity)
         }
 
         optionRepository.saveAll(optionEntityList)
@@ -73,15 +69,10 @@ class OptionService(
 
         val optionEntityList = request.optionList.map {
             val itemEntity = itemEntityMap[it.itemCode]
-                ?: throw IllegalArgumentException("The item with code ${it.itemCode} not found")
-
             val optionEntity = optionEntityMap[it.code]
                 ?: throw IllegalArgumentException("The option with code ${it.code} not found")
 
-            optionEntity.item = itemEntity
-            optionEntity.name = it.name
-            optionEntity.type = it.type
-            optionEntity
+            optionEntity.update(it, itemEntity)
         }
 
         optionRepository.saveAll(optionEntityList)
@@ -106,15 +97,10 @@ class OptionService(
 
         val optionEntityList = request.optionList.map {
             val itemEntity = itemEntityMap[it.itemCode]
-                ?: throw IllegalArgumentException("Item with code ${it.itemCode} not found")
-
             val optionEntity = optionEntityMap[it.code]
                 ?: OptionEntity.of(shopEntity, it.code)
 
-            optionEntity.item = itemEntity
-            optionEntity.name = it.name
-            optionEntity.type = it.type
-            optionEntity
+            optionEntity.update(it, itemEntity)
         }
         optionRepository.saveAll(optionEntityList)
 

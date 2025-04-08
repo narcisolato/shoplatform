@@ -29,6 +29,7 @@ class CategoryService(
             val parentCategoryEntity = categoryEntityMap[it.parentCategoryCode]
             val categoryEntity = CategoryEntity.of(shopEntity, it.code)
             categoryEntityMap[it.code] = categoryEntity
+
             categoryEntity.update(it, parentCategoryEntity)
         }
         categoryRepository.saveAll(categoryEntityList)
@@ -58,6 +59,7 @@ class CategoryService(
             val parentCategoryEntity = categoryEntityMap[it.parentCategoryCode]
             val categoryEntity = categoryEntityMap[it.code]
                 ?: throw IllegalArgumentException("The Category with code: ${it.code} not found")
+
             categoryEntity.update(it, parentCategoryEntity)
         }
         categoryRepository.saveAll(categoryEntityList)
@@ -80,6 +82,7 @@ class CategoryService(
             val categoryEntity = categoryEntityMap[it.code]
                 ?: CategoryEntity.of(shopEntity, it.code)
             categoryEntityMap[it.code] = categoryEntity
+
             categoryEntity.update(it, parentCategoryEntity)
         }
         categoryRepository.saveAll(categoryEntityList)
@@ -91,7 +94,6 @@ class CategoryService(
     @Transactional
     fun delete(request: CategoryDto.Request) {
         val shopEntity = shopService.getShopEntity(request.shopCode)
-
         val categoryCodeList = request.categoryList.flatMap { listOf(it.code) }
         val categoryEntityList = categoryRepository.findByShopAndCodeIn(shopEntity, categoryCodeList)
 

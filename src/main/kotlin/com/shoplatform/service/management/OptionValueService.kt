@@ -7,6 +7,7 @@ import com.shoplatform.entity.ShopEntity
 import com.shoplatform.repository.OptionRepository
 import com.shoplatform.repository.OptionValueRepository
 import com.shoplatform.shared.converter.toDomain
+import com.shoplatform.shared.updater.update
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -32,14 +33,9 @@ class OptionValueService(
 
         val optionValueEntityList = request.optionValueList.map {
             val optionEntity = optionEntityMap[it.optionCode]
-                ?: throw IllegalArgumentException("The Option with code: ${it.optionCode} not exists")
-
             val optionValueEntity = OptionValueEntity.of(shopEntity, it.code)
 
-            optionValueEntity.option = optionEntity
-            optionValueEntity.name = it.name
-            optionValueEntity.price = it.price
-            optionValueEntity
+            optionValueEntity.update(it, optionEntity)
         }
 
         optionValueRepository.saveAll(optionValueEntityList)
@@ -74,15 +70,10 @@ class OptionValueService(
 
         val optionValueEntityList = request.optionValueList.map {
             val optionEntity = optionEntityMap[it.optionCode]
-                ?: throw IllegalArgumentException("The Option with code: ${it.optionCode} not exists")
-
             val optionValueEntity = optionValueEntityMap[it.code]
                 ?: throw IllegalArgumentException("The Option Value with code: ${it.code} not exists")
 
-            optionValueEntity.option = optionEntity
-            optionValueEntity.name = it.name
-            optionValueEntity.price = it.price
-            optionValueEntity
+            optionValueEntity.update(it, optionEntity)
         }
 
         optionValueRepository.saveAll(optionValueEntityList)
@@ -107,15 +98,10 @@ class OptionValueService(
 
         val optionValueEntityList = request.optionValueList.map {
             val optionEntity = optionEntityMap[it.optionCode]
-                ?: throw IllegalArgumentException("Option with code ${it.optionCode} not found")
-
             val optionValueEntity = optionValueEntityMap[it.code]
                 ?: OptionValueEntity.of(shopEntity, it.code)
 
-            optionValueEntity.option = optionEntity
-            optionValueEntity.name = it.name
-            optionValueEntity.price = it.price
-            optionValueEntity
+            optionValueEntity.update(it, optionEntity)
         }
         optionValueRepository.saveAll(optionValueEntityList)
 
