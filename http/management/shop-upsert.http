@@ -1,23 +1,26 @@
-### 매장 전체 정보 조회
-GET http://localhost:8080/management/shop/shop/all
+@local-host = http://localhost:8080
+@shop-code = test-shop-code
+
+### 매장 테이블 조회
+GET {{local-host}}/management/shop/{{shop-code}}
 
 ### 매장 등록
-POST http://localhost:8080/management/shop
+POST {{local-host}}/management/shop
 Content-Type: application/json
 
 {
     "shop": {
-        "code": "shop",
+        "code": "{{shop-code}}",
         "name": "매장 이름"
     }
 }
 
 ### 카테고리 등록
-POST http://localhost:8080/management/category
+POST {{local-host}}/management/category
 Content-Type: application/json
 
 {
-    "shopCode": "shop",
+    "shopCode": "{{shop-code}}",
     "categoryList": [
         {
             "code": "category-1",
@@ -25,7 +28,7 @@ Content-Type: application/json
         },
         {
             "code": "category-2",
-            "parentCategoryCode": "category-1",
+            "parentCategoryCode": "category-a",
             "name": "카테고리2"
         },
       {
@@ -37,39 +40,39 @@ Content-Type: application/json
 }
 
 ### 상품 등록
-POST http://localhost:8080/management/item
+POST {{local-host}}/management/item
 Content-Type: application/json
 
 {
-    "shopCode": "shop",
+    "shopCode": "{{shop-code}}",
     "itemList": [
         {
             "categoryCode": "category-1",
             "code": "item-1",
-            "name": "아이템-1",
-            "price": 3.14
+            "name": "아이템-1!",
+            "price": 3.45
         },
         {
             "categoryCode": "category-2",
-            "code": "item-2",
-            "name": "아이템-2",
-            "price": 1.59
+            "code": "item-5",
+            "name": "아이템-5",
+            "price": 3.47
         },
         {
             "categoryCode": "category-3",
-            "code": "item-3",
-            "name": "아이템-3",
-            "price": 2.65
+            "code": "item-7",
+            "name": "아이템-7",
+            "price": 3.46
         }
     ]
 }
 
 ### 옵션 등록
-POST http://localhost:8080/management/option
+POST {{local-host}}/management/option
 Content-Type: application/json
 
 {
-    "shopCode": "shop",
+    "shopCode": "{{shop-code}}",
     "optionList": [
         {
             "itemCode": "item-1",
@@ -92,22 +95,22 @@ Content-Type: application/json
 }
 
 ### 옵션값 등록
-POST http://localhost:8080/management/option-value
+POST {{local-host}}/management/option-value
 Content-Type: application/json
 
 {
-    "shopCode": "shop",
+    "shopCode": "{{shop-code}}",
     "optionValueList": [
         {
             "optionCode": "option-1",
             "code": "value-1",
-            "name": "옵션값-1",
-            "price": 3.58
+            "name": "엘리먼트-1",
+            "price": 3.45
         },
         {
             "optionCode": "option-2",
             "code": "value-2",
-            "name": "옵션값-2"
+            "name": "엘리먼트-2"
         },
         {
             "optionCode": "option-2",

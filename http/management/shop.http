@@ -1,0 +1,46 @@
+### 매장 등록
+POST {{host}}/management/shop
+Content-Type: application/json
+
+{
+  "shop": {
+    "code": "{{shop-code}}",
+    "name": "테스트 매장 이름"
+  }
+}
+
+### 매장 조회
+GET {{host}}/management/shop/{{shop-code}}
+Content-Type: application/json
+
+### 매장 수정
+PATCH {{host}}/management/shop
+Content-Type: application/json
+
+{
+  "shop": {
+    "code": "{{shop-code}}",
+    "name": "매장 이름 수정"
+  }
+}
+
+### 매장 업서트
+PUT {{host}}/management/shop
+Content-Type: application/json
+
+{
+  "shop": {
+    "code": "{{shop-code}}",
+    "name": "매장 이름 업서트"
+  }
+}
+
+### 매장 삭제
+DELETE {{host}}/management/shop
+Content-Type: application/json
+
+{
+  "shop": {
+    "code": "{{shop-code}}"
+  }
+}

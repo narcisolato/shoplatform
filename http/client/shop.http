@@ -1,2 +1,2 @@
 # 매장 메뉴 조회
-GET http://localhost:8080/client/shop/shop
+GET http://localhost:8080/client/shop/test-shop-code
