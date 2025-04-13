@@ -18,18 +18,21 @@ class CategoryService(
     @Transactional
     fun create(request: CategoryDto.Request): CategoryDto.Response {
         val shopEntity = shopService.getShopEntity(request.shopCode)
+        val categoryCodeList = request.categoryList.map { it.code }
 
-        val categoryCodeList = request.categoryList.flatMap { listOfNotNull(it.code, it.parentCategoryCode) }
         if (existsAllCategoryEntity(shopEntity, categoryCodeList)) {
             throw IllegalArgumentException("The Category list with codes: $categoryCodeList exists")
         }
 
-        val categoryEntityMap = mutableMapOf<String, CategoryEntity>()
+        val parentCategoryCodeList = request.categoryList.mapNotNull { it.parentCategoryCode }
+        val categoryEntityMap = categoryRepository.findByShopAndCodeIn(shopEntity, parentCategoryCodeList)
+            .associateBy { it.code }
+            .toMutableMap()
+
         val categoryEntityList = request.categoryList.map {
             val parentCategoryEntity = categoryEntityMap[it.parentCategoryCode]
             val categoryEntity = CategoryEntity.of(shopEntity, it.code)
             categoryEntityMap[it.code] = categoryEntity
-
             categoryEntity.update(it, parentCategoryEntity)
         }
         categoryRepository.saveAll(categoryEntityList)
