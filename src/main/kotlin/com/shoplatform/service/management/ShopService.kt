@@ -75,5 +75,5 @@ class ShopService(
             ?: throw IllegalArgumentException("The Shop with code: $code not found")
     }
 
-    private fun existsShopEntity(code: String) = shopRepository.existsByCode(code)
+    fun existsShopEntity(code: String) = shopRepository.existsByCode(code)
 }
