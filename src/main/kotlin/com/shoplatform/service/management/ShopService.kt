@@ -4,6 +4,8 @@ import com.shoplatform.dto.management.ShopDto
 import com.shoplatform.entity.ShopEntity
 import com.shoplatform.repository.ShopRepository
 import com.shoplatform.shared.converter.toDomain
+import com.shoplatform.shared.error.ClientException
+import com.shoplatform.shared.error.ErrorCode
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,7 +17,7 @@ class ShopService(
     @Transactional
     fun create(request: ShopDto.Request): ShopDto.Response {
         if (existsShopEntity(request.shop.code)) {
-            throw IllegalArgumentException("The shop code: ${request.shop.code} already exists")
+            throw ClientException(ErrorCode.EXISTS_SHOP, request.shop.code)
         }
 
         val shopEntity = ShopEntity.of(request.shop.code)
@@ -72,7 +74,7 @@ class ShopService(
 
     fun getShopEntity(code: String): ShopEntity {
         return shopRepository.findByCode(code)
-            ?: throw IllegalArgumentException("The Shop with code: $code not found")
+            ?: throw ClientException(ErrorCode.NOT_EXISTS_SHOP, code)
     }
 
     fun existsShopEntity(code: String) = shopRepository.existsByCode(code)

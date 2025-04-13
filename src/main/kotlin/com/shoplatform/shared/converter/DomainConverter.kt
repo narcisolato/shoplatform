@@ -3,6 +3,7 @@ package com.shoplatform.shared.converter
 import com.shoplatform.dto.management.*
 import com.shoplatform.entity.*
 
+// TODO CQS 원칙상 조회를 제외하고는 code만 응답하는 것이 나을 것 같다
 fun ShopEntity.toDomain() = ShopDto.Shop(
     code = this.code,
     name = this.name,
