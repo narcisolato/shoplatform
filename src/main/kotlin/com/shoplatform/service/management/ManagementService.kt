@@ -16,7 +16,7 @@ class ManagementService(
     // 전체 매장 정보 조회
     @Transactional(readOnly = true)
     fun read(code: String): ManagementDto.Response {
-        val shopEntity = shopService.getShopEntity(code)
+        val shopEntity = shopService.getShopEntityWithAll(code)
 
         val shop = shopEntity.toDomain()
         val categoryList = shopEntity.categoryList.map(CategoryEntity::toDomain)

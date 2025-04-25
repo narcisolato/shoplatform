@@ -13,16 +13,16 @@ class ShopEntity(
     var name: String?,
 
     @OneToMany(mappedBy = "shop", cascade = [(CascadeType.ALL)])
-    val categoryList: List<CategoryEntity>,
+    val categoryList: Set<CategoryEntity>,
 
     @OneToMany(mappedBy = "shop", cascade = [CascadeType.ALL])
-    val itemList: List<ItemEntity>,
+    val itemList: Set<ItemEntity>,
 
     @OneToMany(mappedBy = "shop", cascade = [(CascadeType.ALL)])
-    val optionList: List<OptionEntity>,
+    val optionList: Set<OptionEntity>,
 
     @OneToMany(mappedBy = "shop", cascade = [(CascadeType.ALL)])
-    val optionValueList: List<OptionValueEntity>
+    val optionValueList: Set<OptionValueEntity>
 
 ) : BaseEntity() {
 
@@ -31,10 +31,10 @@ class ShopEntity(
             return ShopEntity(
                 code = code,
                 name = null,
-                categoryList = emptyList(),
-                itemList = emptyList(),
-                optionList = emptyList(),
-                optionValueList = emptyList()
+                categoryList = emptySet(),
+                itemList = emptySet(),
+                optionList = emptySet(),
+                optionValueList = emptySet()
             )
         }
     }

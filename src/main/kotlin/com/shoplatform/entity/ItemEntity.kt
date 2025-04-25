@@ -22,7 +22,7 @@ class ItemEntity(
     var price: Double?,
 
     @OneToMany(mappedBy = "item", cascade = [(CascadeType.REMOVE)])
-    val optionList: List<OptionEntity>,
+    val optionList: Set<OptionEntity>,
 
     ) : BaseEntity() {
 
@@ -34,7 +34,7 @@ class ItemEntity(
                 code = code,
                 name = null,
                 price = 0.0,
-                optionList = emptyList()
+                optionList = emptySet()
             )
         }
     }

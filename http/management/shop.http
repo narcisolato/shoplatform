@@ -9,6 +9,10 @@ Content-Type: application/json
   }
 }
 
+### 매장 조회-전체
+GET {{host}}/management/shop/{{shop-code}}/all
+Content-Type: application/json
+
 ### 매장 조회
 GET {{host}}/management/shop/{{shop-code}}
 Content-Type: application/json

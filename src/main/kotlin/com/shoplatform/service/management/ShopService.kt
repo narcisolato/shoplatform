@@ -77,5 +77,10 @@ class ShopService(
             ?: throw ClientException(ErrorCode.NOT_EXISTS_SHOP, code)
     }
 
+    fun getShopEntityWithAll(code: String): ShopEntity {
+        return shopRepository.findWithAllByCode(code)
+            ?: throw ClientException(ErrorCode.NOT_EXISTS_SHOP, code)
+    }
+
     fun existsShopEntity(code: String) = shopRepository.existsByCode(code)
 }

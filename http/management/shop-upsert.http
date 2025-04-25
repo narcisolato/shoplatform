@@ -1,5 +1,5 @@
 @local-host = http://localhost:8080
-@shop-code = test-shop-code
+@shop-code = shop-code
 
 ### 매장 테이블 조회
 GET {{local-host}}/management/shop/{{shop-code}}

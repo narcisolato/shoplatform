@@ -23,7 +23,7 @@ class OptionEntity(
     var type: OptionType?,
 
     @OneToMany(mappedBy = "option", cascade = [(CascadeType.REMOVE)])
-    val valueList: List<OptionValueEntity>,
+    val valueList: Set<OptionValueEntity>,
 
     ) : BaseEntity() {
 
@@ -35,7 +35,7 @@ class OptionEntity(
                 item = null,
                 name = null,
                 type = null,
-                valueList = emptyList(),
+                valueList = emptySet(),
             )
         }
     }

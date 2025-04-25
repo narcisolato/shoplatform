@@ -19,10 +19,10 @@ class CategoryEntity(
     var name: String?,
 
     @OneToMany(mappedBy = "category", cascade = [(CascadeType.REMOVE)])
-    val itemList: List<ItemEntity>,
+    val itemList: Set<ItemEntity>,
 
     @OneToMany(mappedBy = "parentCategory", cascade = [CascadeType.REMOVE])
-    val childCategoryList: List<CategoryEntity>
+    val childCategoryList: Set<CategoryEntity>
 
 ) : BaseEntity() {
 
@@ -33,8 +33,8 @@ class CategoryEntity(
                 code = code,
                 name = null,
                 parentCategory = null,
-                itemList = emptyList(),
-                childCategoryList = emptyList()
+                itemList = emptySet(),
+                childCategoryList = emptySet()
             )
         }
     }
