@@ -16,3 +16,7 @@ spring:
     properties:
       hibernate:
         format_sql: false
+
+decorator.datasource:
+  p6spy:
+    enable-logging: false
