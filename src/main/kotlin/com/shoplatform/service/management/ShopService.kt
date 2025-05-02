@@ -6,6 +6,7 @@ import com.shoplatform.repository.ShopRepository
 import com.shoplatform.shared.converter.toDomain
 import com.shoplatform.shared.error.ClientException
 import com.shoplatform.shared.error.ErrorCode
+import com.shoplatform.shared.updater.update
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -21,8 +22,8 @@ class ShopService(
         }
 
         val shopEntity = ShopEntity.of(request.shop.code)
+        shopEntity.update(request.shop)
 
-        shopEntity.name = request.shop.name
         shopRepository.save(shopEntity)
 
         return ShopDto.Response(
@@ -44,7 +45,7 @@ class ShopService(
     @Transactional
     fun update(request: ShopDto.Request): ShopDto.Response {
         val shopEntity = getShopEntity(request.shop.code)
-        shopEntity.name = request.shop.name
+        shopEntity.update(request.shop)
 
         return ShopDto.Response(
             shop = shopEntity.toDomain(),
@@ -57,7 +58,7 @@ class ShopService(
         val shopEntity = shopRepository.findByCode(request.shop.code)
             ?: ShopEntity.of(request.shop.code)
 
-        shopEntity.name = request.shop.name
+        shopEntity.update(request.shop)
         shopRepository.save(shopEntity)
 
         return ShopDto.Response(

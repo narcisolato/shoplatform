@@ -1,13 +1,12 @@
 package com.shoplatform.shared.updater
 
-import com.shoplatform.dto.management.CategoryDto
-import com.shoplatform.dto.management.ItemDto
-import com.shoplatform.dto.management.OptionDto
-import com.shoplatform.dto.management.OptionValueDto
-import com.shoplatform.entity.CategoryEntity
-import com.shoplatform.entity.ItemEntity
-import com.shoplatform.entity.OptionEntity
-import com.shoplatform.entity.OptionValueEntity
+import com.shoplatform.dto.management.*
+import com.shoplatform.entity.*
+
+fun ShopEntity.update(shop: ShopDto.Shop): ShopEntity {
+    name = shop.name
+    return this
+}
 
 fun CategoryEntity.update(category: CategoryDto.Category, parentCategoryEntity: CategoryEntity?): CategoryEntity {
     parentCategory = parentCategoryEntity
