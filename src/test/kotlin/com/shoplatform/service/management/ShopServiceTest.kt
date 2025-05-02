@@ -3,15 +3,18 @@ package com.shoplatform.service.management
 import com.navercorp.fixturemonkey.kotlin.giveMeOne
 import com.shoplatform.FixtureMonkeyBuilder.fixtureMonkey
 import com.shoplatform.dto.management.ShopDto
+import com.shoplatform.entity.ShopEntity
 import com.shoplatform.repository.ShopRepository
+import com.shoplatform.shared.error.ClientException
+import com.shoplatform.shared.error.ErrorCode
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 
-class ShopServiceTest: BehaviorSpec({
+class ShopServiceTest : BehaviorSpec({
 
     val shopRepository: ShopRepository = mockk()
     val shopService = ShopService(shopRepository)
@@ -19,25 +22,33 @@ class ShopServiceTest: BehaviorSpec({
     Context("매장 등록") {
         Given("기존에 매장이 이미 존재하는 경우") {
             val request: ShopDto.Request = fixtureMonkey.giveMeOne()
-            every { shopService.existsShopEntity(request.shop.code) } returns true
+            every { shopService.existsShopEntity(any()) } returns true
 
             When("매장 등록") {
-                val exception = shouldThrow<IllegalArgumentException> {
+                val exception = shouldThrow<ClientException> {
                     shopService.create(request)
                 }
 
                 Then("예외 반환") {
-                    verify(exactly = 1) { shopService.existsShopEntity(request.shop.code) }
-                    // TODO 에러 코드화하기
-                    exception.message shouldContain "already exists"
+                    verify { shopService.existsShopEntity(request.shop.code) }
+                    exception.code shouldBe ErrorCode.EXISTS_SHOP
                 }
             }
         }
 
         Given("기존에 매장이 없는 경우") {
-            When("매장 등록") {
-                Then("매장 등록 성공") {
+            val request: ShopDto.Request = fixtureMonkey.giveMeOne()
+            val shopEntity: ShopEntity = fixtureMonkey.giveMeOne()
 
+            every { shopService.existsShopEntity(any()) } returns false
+            every { shopRepository.save(any()) } returns shopEntity
+
+            When("매장 등록") {
+                val result = shopService.create(request)
+
+                Then("매장 등록 성공") {
+                    verify { shopRepository.save(any()) }
+                    result.shop.name shouldBe request.shop.name
                 }
             }
         }
