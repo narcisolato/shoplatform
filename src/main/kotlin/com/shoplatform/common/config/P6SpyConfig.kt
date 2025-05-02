@@ -3,6 +3,7 @@ package com.shoplatform.common.config
 import com.p6spy.engine.spy.P6SpyOptions
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy
 import jakarta.annotation.PostConstruct
+import org.hibernate.engine.jdbc.internal.FormatStyle
 import org.springframework.context.annotation.Configuration
 
 @Configuration
@@ -22,6 +23,9 @@ class P6SpyConfig: MessageFormattingStrategy {
         sql: String?,
         url: String?
     ): String {
-        return "$category | $elapsed ms | $sql"
+        return "$category | $elapsed ms | ${formatSql(sql)}"
     }
+
+    private fun formatSql(sql: String?): String? =
+        sql?.let { FormatStyle.HIGHLIGHT.formatter.format(it) }
 }
