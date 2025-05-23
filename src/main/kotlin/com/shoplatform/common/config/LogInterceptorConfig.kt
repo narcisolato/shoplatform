@@ -40,7 +40,7 @@ class LogInterceptorConfig: WebMvcConfigurer {
         override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
             val method = request.method
             val requestPath = request.requestURI
-            val logId = UUID.randomUUID().toString().substring(0..8)
+            val logId = UUID.randomUUID().toString().substring(0..7)
             request.setAttribute(LOG_ID, logId)
             val ip = getIp(request)
             log.debug("[Request][$logId][$ip][$method][$requestPath]")
@@ -48,7 +48,7 @@ class LogInterceptorConfig: WebMvcConfigurer {
         }
 
         override fun afterCompletion(request: HttpServletRequest, response: HttpServletResponse, handler: Any, ex: Exception?) {
-            val logId = request.getHeader(LOG_ID)
+            val logId = request.getAttribute(LOG_ID)
             log.debug("[Response][$logId]")
             ex?.let {
                 log.warn("[Response][$logId] ${it.message}")
